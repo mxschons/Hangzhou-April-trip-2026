@@ -1,0 +1,96 @@
+\documentclass[11pt,a4paper]{article}
+
+% Jiangnan Style Guide - Hangzhou Trip Document
+% Colors: Ink, Rice Paper, Cinnabar, Celadon
+
+\usepackage[margin=1in]{geometry}
+\usepackage{fontspec}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{parskip}
+
+% ══════════════════════════════════════════════════════════════
+% COLOR PALETTE - Jiangnan Architectural Tradition
+% ══════════════════════════════════════════════════════════════
+
+\definecolor{ink}{HTML}{1C1917}
+\definecolor{ricepaper}{HTML}{FEFDFB}
+\definecolor{stone}{HTML}{44403C}
+\definecolor{cinnabar}{HTML}{C2675B}
+\definecolor{cinnabarlight}{HTML}{E8ADA6}
+\definecolor{celadon}{HTML}{8FABA0}
+\definecolor{celadondark}{HTML}{6B8F82}
+\definecolor{bamboo}{HTML}{D4CFC4}
+
+% ══════════════════════════════════════════════════════════════
+% TYPOGRAPHY
+% ══════════════════════════════════════════════════════════════
+
+\setmainfont{PingFang SC}[
+  BoldFont={PingFang SC Semibold}
+]
+
+% Page and text colors
+\pagecolor{ricepaper}
+\color{ink}
+
+% ══════════════════════════════════════════════════════════════
+% HYPERLINKS - Cinnabar accent
+% ══════════════════════════════════════════════════════════════
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cinnabar,
+  urlcolor=celadondark,
+  pdfborder={0 0 0}
+}
+
+% ══════════════════════════════════════════════════════════════
+% TABLES
+% ══════════════════════════════════════════════════════════════
+
+\renewcommand{\arraystretch}{1.4}
+\setlength{\tabcolsep}{10pt}
+
+% ══════════════════════════════════════════════════════════════
+% IMAGES - with pandoc bounded support
+% ══════════════════════════════════════════════════════════════
+
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+% Pandoc 3.x uses \pandocbounded for images
+\providecommand{\pandocbounded}[1]{#1}
+
+% ══════════════════════════════════════════════════════════════
+% PANDOC COMPATIBILITY
+% ══════════════════════════════════════════════════════════════
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+% ══════════════════════════════════════════════════════════════
+% DOCUMENT
+% ══════════════════════════════════════════════════════════════
+
+\begin{document}
+
+$body$
+
+\end{document}
