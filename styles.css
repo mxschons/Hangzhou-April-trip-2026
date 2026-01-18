@@ -619,6 +619,7 @@ p {
   height: 180px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: center 15%;
   margin: 0 auto;
   border: 4px solid var(--bamboo);
 }
@@ -986,88 +987,97 @@ p {
    Detailed Itinerary - Two Column Layout
    ───────────────────────────────────────────────────────────── */
 
-.itinerary-layout {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 0;
+.detailed-itinerary {
   position: relative;
 }
 
-.itinerary-timeline-column {
-  position: relative;
-  padding-right: 32px;
-}
-
-/* Vertical line for the left column */
-.itinerary-timeline-column::after {
+/* The continuous vertical timeline line */
+.detailed-itinerary::before {
   content: '';
   position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  left: 180px;
+  top: 24px;
+  bottom: 24px;
   width: 3px;
-  background: linear-gradient(to bottom, var(--celadon), var(--cinnabar));
+  background: linear-gradient(to bottom, var(--celadon), var(--stone) 50%, var(--cinnabar));
   border-radius: 2px;
 }
 
-.itinerary-content-column {
-  padding-left: 32px;
+.day-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 48px;
+  margin-bottom: 40px;
+  position: relative;
 }
 
-.itinerary-day-marker {
-  position: relative;
-  padding-bottom: 32px;
+.day-row:last-child {
+  margin-bottom: 0;
+}
+
+/* Left column: timeline marker */
+.day-marker {
   text-align: right;
+  padding-right: 24px;
+  padding-top: 8px;
+  position: relative;
 }
 
 /* Dot on the timeline */
-.itinerary-day-marker::after {
+.day-marker::after {
   content: '';
   position: absolute;
-  right: -38px;
-  top: 8px;
-  width: 16px;
-  height: 16px;
+  right: -9px;
+  top: 12px;
+  width: 18px;
+  height: 18px;
   background: var(--rice-paper);
   border: 3px solid var(--celadon);
   border-radius: 50%;
   z-index: 2;
+  box-shadow: 0 0 0 4px var(--cream);
 }
 
-.itinerary-day-marker.hangzhou::after {
+.day-marker.hangzhou::after {
   border-color: var(--celadon-dark);
 }
 
-.itinerary-day-marker.shanghai::after {
+.day-marker.shanghai::after {
   border-color: var(--cinnabar);
 }
 
-.itinerary-day-marker.transition::after {
+.day-marker.wuzhen::after {
   border-color: var(--stone);
   background: var(--bamboo);
 }
 
 .marker-day {
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 700;
   color: var(--ink);
   margin-bottom: 4px;
+  line-height: 1.2;
 }
 
 .marker-date {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-muted);
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .marker-title {
-  font-size: 12px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--cinnabar);
+  line-height: 1.3;
 }
+
+.marker-title.hangzhou { color: var(--celadon-dark); }
+.marker-title.shanghai { color: var(--cinnabar); }
+.marker-title.wuzhen { color: var(--stone); }
 
 /* Location badges */
 .location-badge {
@@ -1078,48 +1088,107 @@ p {
   letter-spacing: 0.08em;
   padding: 4px 10px;
   border-radius: 4px;
-  margin-top: 8px;
+  margin-top: 10px;
 }
 
 .location-badge.hangzhou {
-  background: rgba(143, 171, 160, 0.2);
+  background: rgba(143, 171, 160, 0.25);
   color: var(--celadon-dark);
 }
 
 .location-badge.shanghai {
-  background: rgba(194, 103, 91, 0.15);
+  background: rgba(194, 103, 91, 0.2);
   color: var(--cinnabar-dark);
 }
 
 .location-badge.wuzhen {
-  background: rgba(68, 64, 60, 0.1);
+  background: rgba(68, 64, 60, 0.15);
   color: var(--stone);
 }
 
+/* Right column: content */
+.day-content {
+  min-width: 0;
+}
+
+/* Hotel rows span both columns differently */
+.hotel-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 48px;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.hotel-row .day-marker::after {
+  width: 14px;
+  height: 14px;
+  right: -7px;
+  top: 16px;
+  border-width: 2px;
+  background: var(--bamboo);
+}
+
 @media (max-width: 900px) {
-  .itinerary-layout {
+  .detailed-itinerary::before {
+    left: 12px;
+  }
+
+  .day-row,
+  .hotel-row {
     grid-template-columns: 1fr;
+    gap: 16px;
+    padding-left: 40px;
   }
 
-  .itinerary-timeline-column {
-    display: none;
+  .day-marker {
+    text-align: left;
+    padding-right: 0;
+    padding-top: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 8px 16px;
   }
 
-  .itinerary-content-column {
-    padding-left: 0;
+  .day-marker::after {
+    left: -34px;
+    right: auto;
+    top: 4px;
+  }
+
+  .hotel-row .day-marker::after {
+    left: -32px;
+    top: 8px;
+  }
+
+  .marker-day {
+    font-size: 1.25rem;
+  }
+
+  .marker-date {
+    margin-bottom: 0;
+  }
+
+  .marker-title {
+    width: 100%;
+  }
+
+  .location-badge {
+    margin-top: 0;
+    margin-left: auto;
   }
 }
 
 /* ─────────────────────────────────────────────────────────────
-   Day Cards
+   Day Cards (new two-column layout)
    ───────────────────────────────────────────────────────────── */
 
 .day-card {
   background: var(--rice-paper);
   border: 1px solid var(--bamboo);
   border-radius: var(--radius-lg);
-  padding: 32px;
-  margin-bottom: 32px;
+  padding: 28px;
   box-shadow: var(--shadow-sm);
   transition: box-shadow 0.3s ease;
 }
@@ -1145,47 +1214,24 @@ p {
 }
 
 .day-image {
-  margin: -32px -32px 24px -32px;
+  margin: -28px -28px 24px -28px;
   border-radius: var(--radius-lg) var(--radius-lg) 0 0;
   overflow: hidden;
-  height: 200px;
+  height: 180px;
+}
+
+/* Account for left border on location-specific cards */
+.day-card.hangzhou .day-image,
+.day-card.shanghai .day-image,
+.day-card.wuzhen .day-image {
+  margin-left: -32px;
+  border-top-left-radius: 0;
 }
 
 .day-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-
-.day-header {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
-
-.day-number {
-  background: var(--celadon-dark);
-  color: var(--rice-paper);
-  padding: 8px 16px;
-  border-radius: var(--radius-sm);
-  font-weight: 600;
-  font-size: 14px;
-  white-space: nowrap;
-}
-
-.day-info h3 {
-  font-size: 1.25rem;
-  margin-bottom: 4px;
-}
-
-.day-title {
-  color: var(--cinnabar);
-  font-weight: 600;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0;
 }
 
 .day-description {
